@@ -1,0 +1,89 @@
+<app-loader [show]="showLoader" message="Loading records..."></app-loader>
+
+<div class="page-wrapper">
+  <div class="container-fluid px-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+      <div>
+        <h2 class="fw-bold text-dark mb-0">All Records</h2>
+        <p class="text-muted mb-0">All submitted entries from the form.</p>
+      </div>
+      <button class="btn btn-primary" (click)="goToForm()">&#43; Add New Record</button>
+    </div>
+
+    <!-- Search -->
+    <div class="mb-3 col-lg-4 col-md-6 px-0">
+      <div class="search-wrapper">
+        <span class="search-icon">&#128269;</span>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by Name across all records..."
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearch()" />
+      </div>
+      <div class="d-flex align-items-center gap-2 mt-1" *ngIf="searchQuery">
+        <small class="text-muted">
+          {{ filteredRecords.length }} of {{ allRecordsCache.length || totalRecords }} result(s) for
+          <strong>"{{ searchQuery }}"</strong>
+        </small>
+        <button class="btn btn-outline-primary btn-sm text-danger" (click)="clearSearch()">Clear</button>
+        <!-- <button class="btn btn-sm btn-link p-0 text-danger" (click)="clearSearch()">Clear</button> -->
+      </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="card p-3" *ngIf="!showLoader">
+
+      <!-- No search match -->
+      <div *ngIf="isSearching && filteredRecords.length === 0" class="text-center py-4">
+        <p class="text-muted fs-5">&#128269; No records match <strong>"{{ searchQuery }}"</strong></p>
+        <button class="btn btn-outline-primary btn-sm" (click)="clearSearch()">Clear Search</button>
+      </div>
+
+      <!-- No records at all -->
+      <div *ngIf="!isSearching && totalRecords === 0" class="text-center py-4">
+        <p class="text-muted fs-5">&#128203; No records found.</p>
+        <button class="btn btn-primary btn-sm" (click)="goToForm()">Submit First Record</button>
+      </div>
+
+      <!-- Table with global index passed in -->
+      <app-record-table
+        *ngIf="displayRecords.length > 0"
+        [records]="displayRecords"
+        [startIndex]="isSearching
+          ? (searchPage - 1) * searchPageSize
+          : (currentPage - 1) * pageSize">
+      </app-record-table>
+
+      <!-- Normal pagination -->
+      <app-pagination
+        *ngIf="!isSearching && totalRecords > 0"
+        [currentPage]="currentPage"
+        [totalPages]="totalPages"
+        [totalRecords]="totalRecords"
+        (pageChange)="onPageChange($event)">
+      </app-pagination>
+
+      <!-- Search pagination -->
+      <app-pagination
+        *ngIf="isSearching && filteredRecords.length > searchPageSize"
+        [currentPage]="searchPage"
+        [totalPages]="searchTotalPages"
+        [totalRecords]="filteredRecords.length"
+        (pageChange)="onSearchPageChange($event)">
+      </app-pagination>
+
+      <!-- Search footer note -->
+      <div *ngIf="isSearching && filteredRecords.length > 0" class="mt-2">
+        <small class="text-muted fst-italic">
+          Searching across all {{ allRecordsCache.length || totalRecords }} records.
+          <a href="javascript:void(0)" class="text-primary ms-1" (click)="clearSearch()">Back to default view</a>
+        </small>
+      </div>
+
+    </div>
+
+  </div>
+</div>

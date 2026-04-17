@@ -1,0 +1,7 @@
+<div class="toast-container">
+  <div *ngFor="let t of toasts" class="toast-box toast-{{t.type}} mb-2">
+    <span class="toast-icon">{{ icon(t.type) }}</span>
+    <span>{{ t.message }}</span>
+    <span class="toast-close" (click)="remove(t.id)">&times;</span>
+  </div>
+</div>

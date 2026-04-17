@@ -1,0 +1,24 @@
+<div class="table-responsive">
+  <table class="table table-hover align-middle mb-0">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Age</th>
+        <th>Phone</th>
+        <th>Submitted At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let record of records; let i = index">
+        <td><span class="badge-custom">{{ startIndex + i + 1 }}</span></td>
+        <td class="fw-semibold">{{ record.name }}</td>
+        <td>{{ record.email }}</td>
+        <td>{{ record.age }}</td>
+        <td>{{ record.phone }}</td>
+        <td>{{ record.created_at | date:'dd MMM yyyy, hh:mm a' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

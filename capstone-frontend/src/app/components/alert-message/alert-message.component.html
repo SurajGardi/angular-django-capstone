@@ -1,0 +1,8 @@
+<div *ngIf="show" class="alert alert-{{type}} alert-dismissible fade show d-flex align-items-center" role="alert">
+  <span *ngIf="type === 'success'">&#10003;&nbsp;</span>
+  <span *ngIf="type === 'danger'">&#10007;&nbsp;</span>
+  <span *ngIf="type === 'warning'">&#9888;&nbsp;</span>
+  <span *ngIf="type === 'info'">&#9432;&nbsp;</span>
+  <div>{{ message }}</div>
+  <button type="button" class="btn-close ms-auto" (click)="close()"></button>
+</div>

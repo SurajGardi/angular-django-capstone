@@ -1,0 +1,76 @@
+<app-loader [show]="showLoader" message="Submitting record..."></app-loader>
+
+<div class="page-wrapper">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7 col-md-9">
+
+        <div class="text-center mb-4">
+          <h2 class="fw-bold text-dark">Submit a Record</h2>
+          <p class="text-muted">Fill out the form below to add a new entry.</p>
+        </div>
+
+        <div class="card p-4">
+          <form [formGroup]="recordForm" (ngSubmit)="onSubmit()" novalidate>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="name" placeholder="e.g. Suraj Gardi"
+                [class.is-invalid]="f['name'].touched && f['name'].invalid"
+                [class.is-valid]="f['name'].touched && f['name'].valid">
+              <div class="invalid-feedback">
+                <span *ngIf="f['name'].errors?.['required']">Name is required.</span>
+                <span *ngIf="f['name'].errors?.['minlength']">Name must be at least 2 characters.</span>
+                <span *ngIf="f['name'].errors?.['pattern']">Name must contain only letters and spaces.</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Email Address <span class="text-danger">*</span></label>
+              <input type="email" class="form-control" formControlName="email" placeholder="e.g. suraj@example.com"
+                [class.is-invalid]="f['email'].touched && f['email'].invalid"
+                [class.is-valid]="f['email'].touched && f['email'].valid">
+              <div class="invalid-feedback">
+                <span *ngIf="f['email'].errors?.['required']">Email is required.</span>
+                <span *ngIf="f['email'].errors?.['email']">Enter a valid email address.</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Age <span class="text-danger">*</span></label>
+              <input type="number" class="form-control" formControlName="age" placeholder="Must be between 18 and 100"
+                [class.is-invalid]="f['age'].touched && f['age'].invalid"
+                [class.is-valid]="f['age'].touched && f['age'].valid">
+              <div class="invalid-feedback">
+                <span *ngIf="f['age'].errors?.['required']">Age is required.</span>
+                <span *ngIf="f['age'].errors?.['min']">Age must be at least 18.</span>
+                <span *ngIf="f['age'].errors?.['max']">Age must be at most 100.</span>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Phone Number <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="phone" placeholder="e.g. 9876543210"
+                [class.is-invalid]="f['phone'].touched && f['phone'].invalid"
+                [class.is-valid]="f['phone'].touched && f['phone'].valid">
+              <div class="invalid-feedback">
+                <span *ngIf="f['phone'].errors?.['required']">Phone is required.</span>
+                <span *ngIf="f['phone'].errors?.['pattern']">Phone must be 10 to 13 digits only.</span>
+              </div>
+            </div>
+
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary flex-fill" [disabled]="isSubmitting">
+                <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+                {{ isSubmitting ? 'Submitting...' : 'Submit Record' }}
+              </button>
+              <button type="button" class="btn btn-outline-secondary" (click)="recordForm.reset()">Reset</button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
