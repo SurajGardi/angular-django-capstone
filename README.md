@@ -80,6 +80,26 @@ angular-django-capstone/
 
 ---
 
+## 📸 Screenshots
+
+### 📝 Form Page
+
+![Form Page](screenshots/submit_record.png)
+
+### ⏳ Loading Screen
+
+![Loading](screenshots/loading.png)
+
+### 📋 Records List (Pagination)
+
+![Records List](screenshots/all_records.png)
+
+### 🔍 Search Functionality
+
+![Search](screenshots/search_records.png)
+
+---
+
 ## 🛠️ Tech Stack
 
 | Layer | Technology |
